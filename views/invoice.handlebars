@@ -1,0 +1,79 @@
+<html>
+
+  <head>
+    <title>11 out of 10 Plumbing</title>
+    <link rel="stylesheet" href="invoice_styles.css">
+  </head>
+
+  <body>
+
+        <header = id="page_header">
+          <div class="container">
+          <img src="plumber-van.png" alt="logo" class="logo">
+          <nav>
+            <ul>
+              <li><a href="index.html">Dashboard</a></li>
+              <li><a href="/schedule">Schedule</a></li>
+              <li><a href="/invoice">Invoice</a></li>
+              <li><a href="/customer">Customer</a></li>
+              <li><a href='/employee'>Employee</a></li>
+              <li><a href="/service">Service</a></li>
+              <li><a href="/payment">Payment</a></li>
+            </ul>
+          </nav>
+          </div>
+        </header>
+
+
+
+        <form class="submission-form" id="addperson" action="/invoice" method="post">
+          <h3>Add new Invoice</h3>
+            <label>Total Price:</label> <input type="text" name="total_price"><br>
+            <label>Due Date:</label> <input type="date" name="due_date" ><br>
+            <label>Work Order Number Assosiated:</label> <input type="text" name="work_order_number"><br>
+            <label>Status:</label>
+            <select name = "status">
+               <option value = "closed">Closed</option>
+               <option value = "open">Open</option>
+             </select><br>
+            <input type="submit" value="Submit" id="sendBtn">
+         </form>
+        <br/>
+
+        <form class="submission-form" id='search_people' action='' method=''>
+          <h3>Search Invoice</h3>
+            <label> Search invoice by invoice number:</label>
+            <input id='first_name_search_string' type='text' name='first_name_search_string' value=''>
+            <input type="button" value="Search" onclick="searchPeopleByFirstName()" id="sendBtn">
+        </form>
+
+        <h3>Current Invoices:</h3>
+        <table>
+            <thead>
+                <th>Invoice Number</th>
+                <th>Total Price</th>
+                <th>Due Date</th>
+                <th>Work Order</th>
+                <th>Transaction Reference</th>
+                <th>Status</th>
+            </thead>
+            <tbody>
+                {{#each invoice}}
+                <tr>
+                  <td>{{id}}</td>
+                    <td>${{total_price}}</td>
+                    <td>{{due_date}}</td>
+                    <td>{{work_order_number}}</td>
+                    <td>{{transaction_id}}</td>
+                    <td>{{status}}</td>
+                    <td><button onclick="deletePerson({{id}})">Delete</button></td>
+                    <td><a href="/invoice/{{id}}">Update</a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+
+
+  </body>
+
+</html>

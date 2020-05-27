@@ -1,0 +1,79 @@
+<html>
+
+  <head>
+    <title>11 out of 10 Plumbing</title>
+    <link rel="stylesheet" href="employee_styles.css">
+  </head>
+
+  <body>
+
+        <header = id="page_header">
+          <div class="container">
+          <img src="plumber-van.png" alt="logo" class="logo">
+          <nav>
+            <ul>
+              <li><a href="index.html">Dashboard</a></li>
+              <li><a href="/schedule">Schedule</a></li>
+              <li><a href="/invoice">Invoice</a></li>
+              <li><a href="/customer">Customer</a></li>
+              <li><a href='/employee'>Employee</a></li>
+              <li><a href="/service">Service</a></li>
+              <li><a href="/payment">Payment</a></li>
+            </ul>
+          </nav>
+          </div>
+        </header>
+
+
+
+        <form class="submission-form" id="addperson" action="/employee" method="post">
+          <h3>Add new Employee</h3>
+            <label>First name:</label> <input type="text" name="first_name"><br>
+            <label>Last name:</label> <input type="text" name="last_name"><br>
+            <label>Phone Number:</label> <input type="text" name="phone_number"><br>
+            <label>Job Title:</label> <input type="text" name="job_title"><br>
+            <label>Skill:</label> <input type="text" name="skill"><br>
+            <input type="submit" value="Submit" id="sendBtn">
+         </form>
+        <br/>
+
+        <form class="submission-form" id='search_people' action='' method=''>
+          <h3>Search Employee</h3>
+            <label> Search employee for first name starting with:</label>
+            <input id='first_name_search_string' type='text' name='first_name_search_string' value=''>
+            <input type="button" value="Search" onclick="searchPeopleByFirstName()" id="sendBtn">
+        </form>
+
+        <h3>Current employee:</h3>
+        <center>
+          <h4>**Names below are randomly auto generated name and other information</h4>
+        </center>
+        <table>
+            <thead>
+                <th>Employee ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Phone Number</th>
+                <th>Job Title</th>
+                <th>Skill</th>
+            </thead>
+            <tbody>
+                {{#each employee}}
+                <tr>
+                  <td>{{id}}</td>
+                    <td>{{first_name}}</td>
+                    <td>{{last_name}}</td>
+                    <td>{{phone_number}}</td>
+                    <td>{{job_title}}</td>
+                    <td>{{skill}}</td>
+                    <td><button onclick="deletePerson({{id}})">Delete</button></td>
+                    <td><a href="/employee/{{id}}">Update</a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+
+
+  </body>
+
+</html>
