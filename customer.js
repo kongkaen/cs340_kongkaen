@@ -25,7 +25,7 @@ module.exports = function(){
     }
 
 
-    function getPeoplebyHomeworld(req, res, mysql, context, complete){
+    function getCustomerByEmployee(req, res, mysql, context, complete){
       var query = "SELECT customers.customer_id as id, customers.first_name, customers.last_name, address1, address2, city, zip_code, state, country, customers.phone_number, email, employees.first_name as sale_rep, employees.employee_id FROM customers INNER JOIN employees ON employees.employee_id = customers.employee_id WHERE customers.employee_id = ?";
       console.log(req.params)
       var inserts = [req.params.employee_id]
@@ -41,10 +41,9 @@ module.exports = function(){
 
 
 
-    /* Find people whose fname starts with a given string in the req */
 
         function getPeopleWithNameLike(req, res, mysql, context, complete) {
-          //sanitize the input as well as include the % character
+
            var query = "SELECT customers.customer_id as id, first_name, last_name, address1, address2, city, zip_code, state, country, phone_number, email FROM customers WHERE customers.first_name LIKE " + mysql.pool.escape(req.params.s + '%');
           console.log(query)
 
@@ -60,7 +59,6 @@ module.exports = function(){
 
 
 
-    /*Display all employee. Requires web based javascript to delete users with AJAX*/
 
     router.get('/', function(req, res){
         var callbackCount = 0;
@@ -78,14 +76,14 @@ module.exports = function(){
         }
     });
 
-    /*Display all people from a given homeworld. Requires web based javascript to delete users with AJAX*/
+
     router.get('/filter/:employee_id', function(req, res){
         var callbackCount = 0;
         var context = {};
         context.jsscripts = ["filtercustomer.js","searchcustomer.js"];
         context.css = ["customer_styles.css"]
         var mysql = req.app.get('mysql');
-        getPeoplebyHomeworld(req,res, mysql, context, complete);
+        getCustomerByEmployee(req,res, mysql, context, complete);
         getEmployees(res, mysql, context, complete);
         function complete(){
             callbackCount++;
@@ -97,7 +95,6 @@ module.exports = function(){
     });
 
 
-    /*Display all people whose name starts with a given string. Requires web based javascript to delete users with AJAX */
 
     router.get('/search/:s', function(req, res){
         var callbackCount = 0;
@@ -116,7 +113,6 @@ module.exports = function(){
     });
 
 
-    /* Adds a person, redirects to the people page after adding */
 
 
     router.post('/', function(req, res){

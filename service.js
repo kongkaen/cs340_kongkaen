@@ -14,10 +14,8 @@ module.exports = function(){
         });
     }
 
-    /* Find all work order with customer id */
 
         function getServiceByName(req, res, mysql, context, complete) {
-          //sanitize the input as well as include the % character
            var query = "SELECT service_id as id, service_name, unit_price, service_description, warranty FROM services WHERE service_name LIKE " + mysql.pool.escape('%' + req.params.s + '%');
           console.log(query)
 
@@ -32,7 +30,6 @@ module.exports = function(){
         }
 
 
-    /*Display all employee. Requires web based javascript to delete users with AJAX*/
 
     router.get('/', function(req, res){
         var callbackCount = 0;
@@ -51,7 +48,6 @@ module.exports = function(){
 
 
 
-    /*Display all people whose name starts with a given string. Requires web based javascript to delete users with AJAX */
 
     router.get('/search/:s', function(req, res){
         var callbackCount = 0;
@@ -69,7 +65,6 @@ module.exports = function(){
     });
 
 
-    /* Adds a person, redirects to the people page after adding */
 
 
     router.post('/', function(req, res){

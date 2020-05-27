@@ -14,10 +14,8 @@ module.exports = function(){
         });
     }
 
-    /* Find all work order with customer id */
 
         function getPaymentById(req, res, mysql, context, complete) {
-          //sanitize the input as well as include the % character
            var query = "SELECT transaction_id as id, payment_date, amount, type_payment, invoice_number FROM payments WHERE transaction_id LIKE " + mysql.pool.escape(req.params.s + '%');
           console.log(query)
 
@@ -31,8 +29,6 @@ module.exports = function(){
             });
         }
 
-
-    /*Display all employee. Requires web based javascript to delete users with AJAX*/
 
     router.get('/', function(req, res){
         var callbackCount = 0;
@@ -50,9 +46,6 @@ module.exports = function(){
     });
 
 
-
-    /*Display all people whose name starts with a given string. Requires web based javascript to delete users with AJAX */
-
     router.get('/search/:s', function(req, res){
         var callbackCount = 0;
         var context = {};
@@ -69,11 +62,8 @@ module.exports = function(){
     });
 
 
-    /* Adds a person, redirects to the people page after adding */
-
 
     router.post('/', function(req, res){
-        //console.log(req.body.homeworld)
         console.log(req.body)
         var mysql = req.app.get('mysql');
         var sql = "INSERT INTO payments (payment_date, amount, type_payment, invoice_number) VALUES (?,?,?,?)";

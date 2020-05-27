@@ -16,18 +16,15 @@ app.engine('handlebars', handlebars.engine);
 app.use(bodyParser.urlencoded({extended:true}));
 app.use('/static', express.static('public'));
 app.set('view engine', 'handlebars');
-app.set('port', process.argv[2]);
+app.set('port', process.env.port || 4000);
 app.set('mysql', mysql);
-app.use('/people_certs', require('./people_certs.js'));
 app.use('/employee', require('./employee.js'));
 app.use('/customer', require('./customer.js'));
 app.use('/schedule', require('./schedule.js'));
 app.use('/invoice', require('./invoice.js'));
 app.use('/service', require('./service.js'));
 app.use('/payment', require('./payment.js'));
-app.use('/planets', require('./planets.js'));
 app.use('/', express.static('public'));
-//app.use(express.static(path.join(__dirname, '/public')));
 
 app.use(function(req,res){
   res.status(404);
