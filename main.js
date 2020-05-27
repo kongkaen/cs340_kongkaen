@@ -16,7 +16,7 @@ app.engine('handlebars', handlebars.engine);
 app.use(bodyParser.urlencoded({extended:true}));
 app.use('/static', express.static('public'));
 app.set('view engine', 'handlebars');
-app.set('port', process.env.port || 4000);
+app.set('port', process.argv[2]);
 app.set('mysql', mysql);
 app.use('/employee', require('./employee.js'));
 app.use('/customer', require('./customer.js'));
