@@ -1,0 +1,76 @@
+<html>
+<head>
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
+  form {
+    text-align: center;
+    max-width: 600px;
+    margin: 2rem auto;
+    border-radius: 15px;
+    padding: 2rem;
+    font-size: 15px;
+    background: #D5D8DC;
+    font-family: 'Jost', sans-serif;
+
+  }
+  label{
+    width: 200px;
+    text-align: center;
+    display: inline-block;
+    padding: 1rem 0 .5rem;
+    font-family: 'Jost', sans-serif;
+  }
+
+  input, text, select {
+    width: 250px;
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #808B96;
+    border-radius: 5px;
+  }
+
+
+  button{
+    border: 0;
+    background: #0080FF;
+    padding: 10px;
+    color: white;
+    margin-left: 50%;
+    margin-right: 50%;
+    width: auto;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+  }
+
+  h1 {
+    text-align: center;
+    font-family: 'Jost', sans-serif;
+  }
+
+
+
+  </style>
+</head>
+<body>
+  <h1>Update transaction {{item.id}}:</h1>
+  <form id="update-item" action="/payment" method="post">
+      Date: <input type="date" name="payment_date" value="{{item.payment_date}}"><br>
+      Amount: <input type="number" name="amount" value="{{item.amount}}"><br>
+      Invoice Number: <input type="text" name="invoice_number" value="{{item.invoice_number}}"><br>
+      Payment Type:
+      <select name = "type_payment" value="{{item.type_payment}}">
+        <option value = "check">check</option>
+        <option value = "credit card">credit card</option>
+        <option value = "cash">cash</option>
+        <option value = "money order">money order</option>
+        <option value = "direct deposit">direct deposit</option>
+        <option value = "other">other</option><br />
+       </select><br>
+  </form>
+  <button onclick="updatePayment({{item.id}})">Update</button>
+</body>
+
+</html>

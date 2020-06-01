@@ -1,0 +1,69 @@
+<html>
+<head>
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
+  form {
+    text-align: center;
+    max-width: 600px;
+    margin: 2rem auto;
+    border-radius: 15px;
+    padding: 2rem;
+    font-size: 15px;
+    background: #D5D8DC;
+    font-family: 'Jost', sans-serif;
+
+  }
+  label{
+    width: 200px;
+    text-align: center;
+    display: inline-block;
+    padding: 1rem 0 .5rem;
+    font-family: 'Jost', sans-serif;
+  }
+
+  input, text, select {
+    width: 250px;
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #808B96;
+    border-radius: 5px;
+  }
+
+
+  button{
+    border: 0;
+    background: #0080FF;
+    padding: 10px;
+    color: white;
+    margin-left: 50%;
+    margin-right: 50%;
+    width: auto;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+  }
+
+  h1 {
+    text-align: center;
+    font-family: 'Jost', sans-serif;
+  }
+
+
+
+  </style>
+</head>
+<body>
+  <h1>Update {{person.first_name}} {{person.last_name}}:</h1>
+  <form id="update-item" action="/employee" method="post">
+      First name: <input type="text" name="first_name" value="{{person.first_name}}"><br>
+      Last name: <input type="text" name="last_name" value="{{person.last_name}}"><br>
+      Phone Number: <input type="text" name="phone_number" value="{{person.phone_number}}"><br>
+      Job Title: <input type="text" name="job_title" value="{{person.job_title}}"><br>
+      Skill: <input type="text" name="skill" value="{{person.skill}}"><br>
+  </form>
+  <button onclick="updateEmployee({{person.id}})">Update</button>
+</body>
+
+</html>
