@@ -1,45 +1,85 @@
--- These are some Database Manipulation queries for a partially implemented Project Website 
+-- project step 6 Draft
+-- Team 11
+-- These are some Database Manipulation queries for a partially implemented Project Website
 -- using the cs340_kongkaen database.
+-- deonte that (:) refer to input from user
+-- denote that (?) read from user input
 
--- get all employee_id, first_name and last_name
-SELECT employee_id, first_name, last_name FROM employees
+-- Employee data Manipulation
+-- get all employee information
+SELECT employees.employee_id as id, first_name, last_name, phone_number, job_title, skill FROM employees
+-- search for employee with name start with
+SELECT employees.employee_id as id, first_name, last_name, phone_number, job_title, skill FROM employees WHERE employees.first_name LIKE :s + '%'
+-- add a new employee by inserting function
+INSERT INTO employees (first_name, last_name, phone_number, job_title, skill) VALUES (?,?,?,?,?)
+-- updating existing an employee
+UPDATE employees SET first_name=?, last_name=?, phone_number=?, job_title=?, skill=? WHERE employee_id=?
+-- delete an employee
+DELETE FROM employees WHERE employee_id = ?
 
---get all customer who live in CA
-SELECT * FROM customers WHERE state = 'CA'
 
--- get all customer first_name, last_name, employee working with, and work order assosiated
-SELECT c.first_name, c.last_name, c.employee_id AS 'working with employee ID', wo.work_order_number
-FROM customers c INNER JOIN work_orders wo ON c.customer_id = wo.customer_id
+-- Customer data Manipulation
+-- get all customer information
+SELECT customers.customer_id as id, customers.first_name, customers.last_name, address1, address2, city, zip_code, state, country, customers.phone_number, email, employees.first_name as sale_rep, employees.employee_id FROM customers INNER JOIN employees ON employees.employee_id = customers.employee_id
+-- search for customer with name start with
+SELECT customers.customer_id as id, first_name, last_name, address1, address2, city, zip_code, state, country, phone_number, email FROM customers WHERE customers.first_name LIKE :s + '%'
+-- filter customer by employee working with
+SELECT customers.customer_id as id, customers.first_name, customers.last_name, address1, address2, city, zip_code, state, country, customers.phone_number, email, employees.first_name as sale_rep, employees.employee_id FROM customers INNER JOIN employees ON employees.employee_id = customers.employee_id WHERE customers.employee_id = ?
+-- add a new customer by inserting function
+INSERT INTO customers (first_name, last_name, address1, address2, city, zip_code, state, country, phone_number, email, employee_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)
+-- updating existing an customer
+UPDATE customers SET first_name=?, last_name=?, address1=?, address2=?, city=?, zip_code=?, state=?, country=?, phone_number=?, email=?, employee_id=? WHERE customer_id=?
+-- delete an customer
+DELETE FROM customers WHERE customer_id = ?
 
--- get all invoices that have status 'close'
-SELECT * FROM invoices
-WHERE status = 'close'
 
--- get customer name who have 'open' invoice
-SELECT c.first_name, c.last_name, c.phone_number, i.invoice_number, i.status
-FROM customers c INNER JOIN work_orders wo ON c.customer_id = wo.customer_id INNER JOIN invoices i ON i.work_order_number = wo.work_order_number
-WHERE i.status = 'open'
+-- Invoice data Manipulation
+-- get all Invoice information
+SELECT invoices.invoice_number as id, total_price, status, due_date, work_order_number, transaction_id FROM invoices
+-- search for invoice by invoice ID
+SELECT invoice_number as id, total_price, status, due_date, work_order_number, transaction_id FROM invoices WHERE invoice_number LIKE  + :s + '%'
+-- add a new Invoice by inserting function
+INSERT INTO invoices (total_price, status, due_date, work_order_number) VALUES (?,?,?,?)
+-- updating existing an Invoice
+UPDATE invoices SET total_price=?, status=?, due_date=?, work_order_number=? WHERE invoice_number=?
+-- delete an Invoice
+DELETE FROM invoices WHERE invoice_number = ?
 
--- get all payment assosiated with invoice_number '1'
-SELECT * FROM payments WHERE invoice_number = 1
 
---get all customer who paid by check
-SELECT c.first_name, c.last_name, p.type_payment
-FROM customers c INNER JOIN work_orders wo ON c.customer_id = wo.customer_id
-INNER JOIN invoices i ON wo.work_order_number = i.work_order_number
-INNER JOIN payments p ON i.transaction_id = p.transaction_id
-WHERE p.type_payment = 'check'
+-- payment data Manipulation
+-- get all payment information
+SELECT transaction_id as id, payment_date, amount, type_payment, invoice_number FROM payments
+-- search for payment by transaction ID
+SELECT transaction_id as id, payment_date, amount, type_payment, invoice_number FROM payments WHERE transaction_id LIKE :s + '%'
+-- add a new payment by inserting function
+INSERT INTO payments (payment_date, amount, type_payment, invoice_number) VALUES (?,?,?,?)
+-- updating existing an payment
+UPDATE payments SET payment_date=?, amount=?, type_payment=?, invoice_number=? WHERE transaction_id=?
+-- delete an payment
+DELETE FROM payments WHERE transaction_id = ?
 
--- add a new customer
--- denote the variables that will have data from the backend programming language
-INSERT INTO customers (first_name, last_name, address1,address2, city, zip_code, state, country, phone_number, email, employee_id)
-VALUES (:first_nameInput, :last_nameInput, :address1Input, :address2Input, :cityInput, :zip_codeInput, 
-	:stateInput, :countryInput, :phone_numberInput, :emailInput, :employee_id_from_dropdown_Input)
 
--- associate an invoice with a service (M-to-M relationship addition)
-INSERT INTO jobs (invoice_number, service_id) VALUES (:invoice_number_from_dropdown_Input, :service_id_from_dropdown_Input)
+-- work order data Manipulation
+-- get all work order information
+SELECT work_orders.work_order_number as id, call_reason, date, arrival_windows_1, arrival_windows_2, status, work_orders.customer_id FROM work_orders
+-- search for work 0rder by customer ID
+SELECT work_orders.work_order_number as id, call_reason, date, arrival_windows_1, arrival_windows_2, status, work_orders.customer_id FROM work_orders WHERE work_orders.customer_id LIKE :s + '%'
+-- add a new work order by inserting function
+INSERT INTO work_orders (call_reason, date, arrival_windows_1, arrival_windows_2, status, customer_id) VALUES (?,?,?,?,?,?)
+-- updating existing an work order
+UPDATE work_orders SET call_reason=?, date=?, arrival_windows_1=?, arrival_windows_2=?, status=?, customer_id=? WHERE work_order_number=?
+-- delete an work order
+DELETE FROM work_orders WHERE work_order_number = ?
 
-UPDATE customers SET phone_number = :phone_number_Input
 
-DELETE FROM services WHERE service_name = :service_name_selected_from_service_page
-
+-- service data Manipulation
+-- get all service information
+SELECT service_id as id, service_name, unit_price, service_description, warranty FROM services
+-- search for service with name start with
+SELECT service_id as id, service_name, unit_price, service_description, warranty FROM services WHERE service_name LIKE :s + '%'
+-- add a new service by inserting function
+INSERT INTO services (service_name, unit_price, service_description, warranty) VALUES (?,?,?,?)
+-- updating existing an service
+UPDATE services SET service_name=?, unit_price=?, service_description=?, warranty=? WHERE service_id=?
+-- delete an service
+DELETE FROM services WHERE service_id = ?
